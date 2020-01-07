@@ -1,0 +1,18 @@
+- 
+  name: delete cluster 
+  hosts: [kuber]
+  become: true
+  tasks:
+    - name: remove cluster
+      shell: | 
+         kubeadm reset cleanup-node --force
+
+    - name: remove /etc/kubernetes
+      file: 
+        path: /etc/kubernetes
+        state: absent
+
+    - name: remove 
+      file:
+        path: "/home/{{ ansible_user }}/.kube"
+        state: absent
